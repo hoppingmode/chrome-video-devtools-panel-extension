@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json.schemastore.org/chrome-manifest",
+  "action": {
+    "default_icon": {
+      "16": "assets/favicon-16x16.png",
+      "32": "assets/favicon-32x32.png",
+      "48": "assets/favicon-48x48.png"
+    },
+    "default_title": "Video Network Request Preview"
+  },
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "description": "Preview network requests for videos from Developer Tools.",
+  "devtools_page": "extension.html",
+  "host_permissions": ["https://*/*", "http://*/*"],
+  "icons": {
+    "16": "assets/favicon-16x16.png",
+    "32": "assets/favicon-32x32.png",
+    "48": "assets/favicon-48x48.png"
+  },
+  "manifest_version": 3,
+  "name": "Chrome Extension Starter",
+  "permissions": [
+    "tabs",
+    "scripting",
+    "downloads",
+    "webRequest",
+    "webNavigation",
+    "contextMenus",
+    "declarativeContent"
+  ],
+  "short_name": "VidNetPrev",
+  "version": "1.0"
+}
