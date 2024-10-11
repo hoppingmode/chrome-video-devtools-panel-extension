@@ -21,7 +21,7 @@ export async function createMenuItems() {
 }
 
 export function createContextMenu() {
-  chrome.contextMenus.onClicked.addListener((info, tab) => {
+  chrome.contextMenus.onClicked.addListener((info, _tab) => {
     if (info.menuItemId === ContextMenuItems["Video Network Request Preview"].id) {
       console.log("Opening DevTools panel");
     }

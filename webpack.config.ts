@@ -2,27 +2,18 @@ import path from "path";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import CopyWebpackPlugin from "copy-webpack-plugin";
 import FaviconsWebpackPlugin from "favicons-webpack-plugin";
+import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import TerserWebpackPlugin from "terser-webpack-plugin";
 import TsConfigPathsWebpackPlugin from "tsconfig-paths-webpack-plugin";
 import { Configuration, DefinePlugin } from "webpack";
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 
-const webpackPaths = {
-  distDir: path.join(__dirname, "dist"),
-  manifestFile: path.join(__dirname, "src", "manifest.json"),
-  panelTemplateFile: path.join(process.cwd(), "public", "extension.html"),
-  publicDir: path.join(__dirname, "public"),
-  srcDir: path.join(__dirname, "src"),
-  workspaceDir: __dirname
-};
-
-const config: Configuration = {
+export default {
   target: "web",
   stats: "errors-warnings",
   entry: {
-    extension: path.join(__dirname, "src", "renderer", "extension.tsx"),
-    background: path.join(__dirname, "src", "runtime", "background", "background.ts")
+    devtoolsPage: "src/renderer/main.tsx",
+    background: "src/runtime/background.ts"
   },
   output: {
     path: path.resolve(__dirname, "dist"),
@@ -44,7 +35,7 @@ const config: Configuration = {
         use: ["style-loader", "css-loader"]
       },
       {
-        test: /\.(js|ts)x?$/,
+        test: /\.tsx?$/,
         loader: "babel-loader",
         exclude: /node_modules/
       }
@@ -68,14 +59,20 @@ const config: Configuration = {
     new DefinePlugin({
       "process.env.TARGET_BROWSER": JSON.stringify(process.env.TARGET_BROWSER)
     }),
+    new ForkTsCheckerWebpackPlugin({
+      typescript: {
+        configFile: path.join(__dirname, "tsconfig.json")
+      },
+      formatter: "basic"
+    }),
     new CleanWebpackPlugin({
       verbose: true
     }),
     new HtmlWebpackPlugin({
-      filename: "extension.html",
-      template: path.join(__dirname, "public", "extension.html"),
+      filename: "devtools_page.html",
+      template: path.join(__dirname, "public", "devtools_page.html"),
       inject: "body",
-      chunks: ["extension"],
+      chunks: ["devtoolsPage"],
       hash: false
     }),
     new CopyWebpackPlugin({
@@ -93,14 +90,8 @@ const config: Configuration = {
     }),
     new FaviconsWebpackPlugin({
       logo: path.join(__dirname, "public", "assets", "logo.png"),
-      mode: "webapp"
+      mode: "webapp",
+      cache: true
     })
   ]
-};
-
-export const baseConfig = {
-  paths: webpackPaths,
-  config: config
-};
-
-export default config;
+} satisfies Configuration;

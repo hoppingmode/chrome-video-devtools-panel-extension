@@ -9,7 +9,18 @@
         "kind": "build",
         "isDefault": true
       },
-      "problemMatcher": ["$ts-webpack"],
+      "problemMatcher": ["$ts-checker-webpack-watch"],
+      "options": {
+        "env": {
+          "TARGET_BROWSER": "chrome"
+        }
+      }
+    },
+    {
+      "label": "start",
+      "type": "npm",
+      "script": "start",
+      "problemMatcher": ["$ts-checker-webpack-watch"],
       "options": {
         "env": {
           "TARGET_BROWSER": "chrome"

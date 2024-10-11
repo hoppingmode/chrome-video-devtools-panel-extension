@@ -1,5 +1,5 @@
 /** @type {import('eslint').Linter.BaseConfig} */
-module.exports= {
+module.exports = {
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: 2020,
@@ -28,7 +28,7 @@ module.exports= {
       },
       node: true,
       webpack: {
-        config: "./webpack.config.mts"
+        config: "./webpack.config.ts"
       }
     },
     node: {

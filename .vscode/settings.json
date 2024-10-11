@@ -19,7 +19,6 @@
   },
   "css.format.enable": false,
   "editor.codeActionsOnSave": {
-    "source.fixAll": "always",
     "source.fixAll.eslint": "always"
   },
   "editor.defaultFoldingRangeProvider": "esbenp.prettier-vscode",

@@ -8,11 +8,11 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "lib": ["es2020", "dom", "dom.iterable"],
-    "types": ["node", "chrome"],
+    "types": ["node", "chrome", "react", "react-dom"],
     "jsx": "react-jsx",
     "paths": {
-      "runtime/*": ["src/runtime/*"],
-      "shared/*": ["src/shared/*"]
+      "@shared": ["src/shared/index.ts"],
+      "@services/*": ["src/runtime/*"]
     },
     "strict": false
   }

@@ -1,0 +1,30 @@
+{
+  "configurations": [
+    {
+      "name": "Launch Chrome",
+      "request": "launch",
+      "type": "chrome",
+      "url": "chrome://extensions",
+      "webRoot": "${workspaceFolder}",
+      "sourceMapPathOverrides": {
+        "webpack:///src/*": "${webRoot}/*"
+      },
+      "sourceMaps": true,
+      "outFiles": ["${workspaceFolder}/**/*.(js|json|html|css)"],
+      "browserLaunchLocation": "workspace",
+      "includeLaunchArgs": true,
+      "runtimeArgs": [
+        "--disable-extensions-except=${workspaceFolder}/dist",
+        "--load-extension=${workspaceFolder}/dist",
+        "--disable-web-security",
+        "--user-data-dir=${env:LOCALAPPDATA}\\Google\\Chrome\\User Data"
+      ],
+      "preLaunchTask": "start",
+      "internalConsoleOptions": "openOnSessionStart",
+      "skipFiles": ["<node_internals>/**"],
+      "smartStep": true,
+      "cwd": "${workspaceFolder}",
+      "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/json"
+    }
+  ]
+}
