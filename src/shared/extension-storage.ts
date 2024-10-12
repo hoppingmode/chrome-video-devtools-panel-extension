@@ -1,22 +1,32 @@
-export type ExtensionStorageVideo = {
+export type TExtensionStorageVideo = {
   name: string;
   url: string;
   thumbnailUrl: string;
 };
 
-export type ExtensionStorage = {
-  videos: ExtensionStorageVideo[];
+export type TExtensionStorage = {
+  videos: TExtensionStorageVideo[];
 };
 
-export function getExtensionStorage(): Promise<ExtensionStorage> {
-  return chrome.storage.local.get<ExtensionStorage>("videos");
-}
+export class ExtensionStorage {
+  constructor() {}
 
-export async function storeVideo(video: ExtensionStorageVideo): Promise<void> {
-  const storage = await getExtensionStorage();
-  if (!storage.videos) {
-    storage.videos = [video];
+  public async init() {
+    await chrome.storage.local.set({ videos: [] });
+    return this;
   }
 
-  storage.videos.push(video);
+  public async get(): Promise<TExtensionStorage> {
+    return chrome.storage.local.get<TExtensionStorage>("videos");
+  }
+
+  public async put(video: TExtensionStorageVideo) {
+    const storage = await this.get();
+    const videos = storage.videos || [];
+    videos.push(video);
+
+    await chrome.storage.local.set({ ...storage, videos });
+  }
 }
+
+export const storage = new ExtensionStorage();
