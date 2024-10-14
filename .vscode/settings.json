@@ -71,7 +71,8 @@
     "overrideName": true,
     "path": "${env:PROGRAMFILES}\\Git\\bin\\bash.exe",
     "env": {
-      "TARGET_BROWSER": "chrome"
+      "TARGET_BROWSER": "chrome",
+      "PATH": "${env:PROGRAMFILES}\\Google\\Chrome\\Application;${env:PATH}"
     }
   },
   "terminal.integrated.defaultProfile.windows": "node-bash",

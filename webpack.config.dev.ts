@@ -1,5 +1,6 @@
 import path from "path";
 import FaviconsWebpackPlugin from "favicons-webpack-plugin";
+import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import { Configuration } from "webpack";
 import { merge } from "webpack-merge";
 import config from "./webpack.config";
@@ -8,11 +9,12 @@ const ExtensionReloader = require("@cedelabs/webpack-ext-reloader");
 
 export default merge<Configuration>(config, {
   mode: "development",
-  devtool: "cheap-module-source-map",
-  entry: {
-    manifest: path.join(__dirname, "src", "manifest.json")
-  },
+  devtool: "inline-source-map",
+
   plugins: [
+    new ForkTsCheckerWebpackPlugin({
+      formatter: "basic"
+    }),
     new ExtensionReloader({
       port: 9090,
       reloadPage: true,

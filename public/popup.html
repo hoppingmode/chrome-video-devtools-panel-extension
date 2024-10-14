@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video Network Request Preview</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Video Network Request Preview</h1>
+    <label></label>
+    <button onclick="">Open DevTools Panel</button>
+    <script>
+        function openDevToolsPanel() {
+            // Open DevTools panel that has already been created
+            chrome.devtools.panels.openResource('devtools_panel.html', 10, function() {
+                console.log('DevTools panel opened');
+            });
+
+        }
+    </script>
+</html>

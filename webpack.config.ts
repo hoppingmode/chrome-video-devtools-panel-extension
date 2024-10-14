@@ -2,11 +2,14 @@ import path from "path";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import CopyWebpackPlugin from "copy-webpack-plugin";
 import FaviconsWebpackPlugin from "favicons-webpack-plugin";
-import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import TerserWebpackPlugin from "terser-webpack-plugin";
 import TsConfigPathsWebpackPlugin from "tsconfig-paths-webpack-plugin";
 import { Configuration, DefinePlugin } from "webpack";
+
+export const devtoolsPanelTemplate = path.join(__dirname, "public", "devtools_panel.html");
+export const popupTemplate = path.join(__dirname, "public", "popup.html");
+export const manifest = path.join(__dirname, "public", "manifest.json");
 
 export default {
   target: "web",
@@ -59,26 +62,25 @@ export default {
     new DefinePlugin({
       "process.env.TARGET_BROWSER": JSON.stringify(process.env.TARGET_BROWSER)
     }),
-    new ForkTsCheckerWebpackPlugin({
-      typescript: {
-        configFile: path.join(__dirname, "tsconfig.json")
-      },
-      formatter: "basic"
-    }),
     new CleanWebpackPlugin({
       verbose: true
     }),
     new HtmlWebpackPlugin({
-      filename: "devtools_page.html",
-      template: path.join(__dirname, "public", "devtools_page.html"),
+      filename: "devtools_panel.html",
+      template: devtoolsPanelTemplate,
       inject: "body",
       chunks: ["devtoolsPage"],
+      hash: false
+    }),
+    new HtmlWebpackPlugin({
+      filename: "popup.html",
+      template: popupTemplate,
       hash: false
     }),
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: path.join(__dirname, "src", "manifest.json"),
+          from: manifest,
           to: path.join(__dirname, "dist"),
           transform: (content: Buffer) => {
             const manifest = JSON.parse(content.toString());
